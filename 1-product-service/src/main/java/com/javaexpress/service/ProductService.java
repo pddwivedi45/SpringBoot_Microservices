@@ -3,6 +3,7 @@ package com.javaexpress.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.javaexpress.exception.ProductNotFoundException;
 import com.javaexpress.models.Product;
 import com.javaexpress.repository.ProductRepository;
 
@@ -19,7 +20,7 @@ public class ProductService {
 	public Product findById(Long productid)
 	{
 		return productRepository.findById(productid).
-				orElseThrow(()-> new RuntimeException("Product not found with id" + productid));
+				orElseThrow(()-> new ProductNotFoundException("Product not found with id " + productid));
 	}
 	
 	public void deleteById(Long productId) 
