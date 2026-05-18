@@ -1,8 +1,11 @@
 package com.javaexpress.service;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.javaexpress.dto.ProductRequestDto;
+import com.javaexpress.dto.ProductResponseDto;
 import com.javaexpress.exception.ProductNotFoundException;
 import com.javaexpress.models.Product;
 import com.javaexpress.repository.ProductRepository;
@@ -15,6 +18,22 @@ public class ProductService {
 	
 	public Product save(Product product) {
 		return productRepository.save(product);
+	}
+	
+	public ProductResponseDto save(ProductRequestDto request) {
+		//convert request to entity object
+		Product product = new Product();
+		product.setName(request.getName());
+		product.setDescription(request.getDescription());
+		product.setPrice(request.getPrice());
+		product.setStock(request.getStock());
+		
+		var dbproduct = productRepository.save(product); 
+		
+		// convert entity to response object
+		ProductResponseDto productResponseDto = new ProductResponseDto();
+		BeanUtils.copyProperties(dbproduct, productResponseDto);
+		return productResponseDto;		
 	}
 	
 	public Product findById(Long productid)
