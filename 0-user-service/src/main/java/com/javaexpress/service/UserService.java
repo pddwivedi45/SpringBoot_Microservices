@@ -1,11 +1,14 @@
 package com.javaexpress.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.javaexpress.dto.CredentialDto;
 import com.javaexpress.dto.UserDto;
+import com.javaexpress.exception.ResourceNotFoundException;
 import com.javaexpress.models.Credential;
 import com.javaexpress.models.User;
 import com.javaexpress.repository.UserRepository;
@@ -49,6 +52,26 @@ public class UserService {
 		userDto.setCredential(credentialDto);
 		
 		return userDto;
+	}
+
+	public UserDto findById(Long userId) {
+		// TODO Auto-generated method stub
+		Optional<User> optional = userRepository.findById(userId);
+		if(optional.isPresent())
+		{
+			User dbUser = optional.get();
+			return maptoDto(dbUser);
+		}
+		else {
+			 throw new ResourceNotFoundException("User not exists");
+		}
+	}
+
+	public UserDto getByUsername(String username) {
+		// TODO Auto-generated method stub
+		return userRepository.findByCredentialUsername(username)
+				.map(user->maptoDto(user))
+				.orElseThrow(()->new ResourceNotFoundException("User not exists"));
 	}
 
 }

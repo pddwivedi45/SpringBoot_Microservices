@@ -1,0 +1,28 @@
+package com.javaexpress.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.javaexpress.dto.CartItemRequestDto;
+import com.javaexpress.dto.CartItemResponseDto;
+import com.javaexpress.service.CartServiceImpl;
+
+import lombok.extern.slf4j.Slf4j;
+
+@RestController
+@Slf4j
+@RequestMapping("/cart")
+public class CartItemController {
+
+	@Autowired
+	private CartServiceImpl  cartServiceImpl;
+	
+	@PostMapping
+	public CartItemResponseDto addToCart(@RequestBody CartItemRequestDto request) {
+		log.info("CartItemController addToCart");
+		return cartServiceImpl.addToCart(request);
+	}
+}
