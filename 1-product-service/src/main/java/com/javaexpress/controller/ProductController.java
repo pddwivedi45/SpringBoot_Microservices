@@ -13,32 +13,34 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.javaexpress.dto.ProductRequestDto;
+import com.javaexpress.dto.ProductResponseDto;
 import com.javaexpress.models.Product;
 import com.javaexpress.service.ProductService;
 
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/products/v1")
 public class ProductController {
 
 	@Autowired
 	private ProductService productService;
 	
 	@PostMapping
-	public ResponseEntity<Product>save(@RequestBody Product product) { 
-	 var result = productService.save(product);
-	 return new	 ResponseEntity<>(result, HttpStatus.CREATED); 
+	public ResponseEntity<ProductResponseDto>save(@RequestBody ProductRequestDto request) { 
+	 var result = productService.save(request);
+	 return new	 ResponseEntity<>(result, HttpStatus.CREATED);   
 	} 
 	
 	@GetMapping("/{productId}")
-	public Product findById(@PathVariable Long productId)
+	public ProductResponseDto getProduct(@PathVariable Long productId)
 	{
-		return productService.findById(productId);
+		return productService.getProduct(productId);
 	}
 	
 	@DeleteMapping("/{productId}")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
-	public void deleteById(@PathVariable Long productId)
+	public void deleteById(@PathVariable Long productId) 
 	{
 		productService.deleteById(productId);
 	}

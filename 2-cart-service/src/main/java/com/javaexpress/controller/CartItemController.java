@@ -1,6 +1,10 @@
 package com.javaexpress.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,5 +28,10 @@ public class CartItemController {
 	public CartItemResponseDto addToCart(@RequestBody CartItemRequestDto request) {
 		log.info("CartItemController addToCart");
 		return cartServiceImpl.addToCart(request);
+	}
+	
+	@GetMapping("/{userId}")
+	public List<CartItemResponseDto> getCartItemByUser(@PathVariable Long userId){
+		return cartServiceImpl.getCartItemByUser(userId);
 	}
 }

@@ -36,8 +36,17 @@ public class ProductService {
 		return productResponseDto;		
 	}
 	
-	public Product findById(Long productid)
+	public ProductResponseDto getProduct(Long productid)
 	{
+		Product dbproduct = productRepository.findById(productid).
+				orElseThrow(()-> new ProductNotFoundException("Product not found with id " + productid));
+		
+		ProductResponseDto responseDto = new ProductResponseDto();
+		BeanUtils.copyProperties(dbproduct, responseDto);
+		return responseDto;
+	}
+	
+	public Product findById(Long productid) {
 		return productRepository.findById(productid).
 				orElseThrow(()-> new ProductNotFoundException("Product not found with id " + productid));
 	}
