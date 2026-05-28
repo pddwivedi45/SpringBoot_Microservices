@@ -30,8 +30,8 @@ public class CartItemController {
 		return cartServiceImpl.addToCart(request);
 	}
 	
-	@GetMapping("/{userId}")
+	@GetMapping("/{userId}")  
 	public List<CartItemResponseDto> getCartItemByUser(@PathVariable Long userId){
-		return cartServiceImpl.getCartItemByUser(userId);
+		return cartServiceImpl.getCartItemByUser(userId); 
 	}
-}
+} 

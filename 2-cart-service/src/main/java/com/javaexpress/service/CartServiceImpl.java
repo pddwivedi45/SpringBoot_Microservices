@@ -46,13 +46,15 @@ public class CartServiceImpl {
 	}
 	
 	public List<CartItemResponseDto> getCartItemByUser(Long userId){
-		return  cartItemRepository.findByUserId(userId)
+		List<CartItemResponseDto> response =   cartItemRepository.findByUserId(userId)
 		.stream()
 		.map(cart->{
 			ProductResponseDto productResponseDto = productFeignIntegrationService.fetchProduct(cart.getProductId());
 			return maptoDto(cart, productResponseDto);
 		})
 		.collect(Collectors.toList());
+		
+		return response;
 	}
 
 	private CartItemResponseDto maptoDto(CartItem dbCartItem, ProductResponseDto product) {

@@ -18,9 +18,12 @@ import com.javaexpress.dto.ProductResponseDto;
 import com.javaexpress.models.Product;
 import com.javaexpress.service.ProductService;
 
+import lombok.extern.slf4j.Slf4j;
+
 
 @RestController
 @RequestMapping("/products/v1")
+@Slf4j
 public class ProductController {
 
 	@Autowired
@@ -35,6 +38,7 @@ public class ProductController {
 	@GetMapping("/{productId}")
 	public ProductResponseDto getProduct(@PathVariable Long productId)
 	{
+		log.info("Product Controller: getProduct");
 		return productService.getProduct(productId);
 	}
 	
